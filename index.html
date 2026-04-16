@@ -12,22 +12,11 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:#f4f4f4;min-height:100vh}
-
-/* --- ÉCRAN DE CONNEXION --- */
-#login-screen {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: #00b100; color: white; display: flex;
-  flex-direction: column; align-items: center; justify-content: center;
-  z-index: 1000; padding: 20px; text-align: center;
-}
-.login-box { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 320px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-.login-box img { width: 80px; margin-bottom: 15px; }
-.login-box h2 { color: #333; font-size: 18px; margin-bottom: 20px; }
-.login-box input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 15px; text-align: center; font-size: 18px; letter-spacing: 5px; }
-.login-box button { width: 100%; padding: 12px; background: #00b100; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
-/* --- STYLE APP (Identique au précédent) --- */
-.app{max-width:480px;margin:0 auto;padding-bottom:3rem; display:none;} /* Caché par défaut */
+#login-screen {position:fixed;top:0;left:0;width:100%;height:100%;background:#00b100;display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;}
+.login-box {background:white;padding:25px;border-radius:15px;width:100%;max-width:320px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.2);}
+.login-box input {width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin-bottom:15px;text-align:center;font-size:18px;letter-spacing:5px;}
+.login-box button {width:100%;padding:12px;background:#00b100;color:white;border:none;border-radius:8px;font-weight:bold;cursor:pointer;}
+.app{max-width:480px;margin:0 auto;padding-bottom:3rem;display:none;}
 .hdr{background:#00b100;color:#fff;padding:.9rem 1.2rem 1rem;border-radius:0 0 14px 14px;margin-bottom:1.2rem;display:flex;align-items:center;gap:14px}
 .lgw{background:#007a00;border-radius:10px;padding:7px 8px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .lgw img{width:52px;height:auto;display:block}
@@ -50,21 +39,23 @@ body{font-family:Arial,sans-serif;background:#f4f4f4;min-height:100vh}
 .nbtns{display:flex;align-items:center;gap:5px}
 .nv{font-size:17px;font-weight:700;min-width:24px;text-align:center}
 .nb{width:28px;height:28px;border:1px solid #ccc;border-radius:7px;background:#f5f5f5;color:#333;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;font-weight:700}
+.cr{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #eee}
+.cs{padding:8px 10px;border:1px solid #ccc;border-radius:8px;font-size:13px;background:#fff;color:#333;min-width:110px}
 .btn{display:block;width:calc(100% - 2rem);margin:0 1rem;padding:14px;background:#00b100;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer}
 .btn:disabled{opacity:.5}
+.sh{font-size:11px;color:#999;display:flex;justify-content:space-between;padding-top:8px}
+.footer-note {text-align: center; font-size: 10px; color: #888; font-style: italic; margin-top: 1.5rem; padding: 0 1rem;}
 .tst{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);padding:10px 22px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s;z-index:99;color:#fff}
-.tst.on{opacity:1}
-.tst.ok{background:#00b100}
-.tst.err{background:#c0392b}
+.tst.on{opacity:1} .tst.ok{background:#00b100} .tst.err{background:#c0392b}
 </style>
 </head>
 <body>
 
 <div id="login-screen">
   <div class="login-box">
-    <img src="logo.png" alt="Saatbau">
-    <h2>Accès Recherche 2026</h2>
-    <input type="password" id="pass-input" placeholder="Code accès">
+    <img src="logo.png" alt="Saatbau" style="width:80px;margin-bottom:15px">
+    <h2 style="font-size:18px;margin-bottom:20px">Accès Recherche 2026</h2>
+    <input type="password" id="pass-input" placeholder="Code">
     <button onclick="checkPass()">Se connecter</button>
   </div>
 </div>
@@ -87,15 +78,9 @@ body{font-family:Arial,sans-serif;background:#f4f4f4;min-height:100vh}
   <div class="sec">
     <div class="stit">Localisation & Technicien</div>
     <div class="mg">
-      <div class="mf full"><label>Site d'essai *</label>
-        <select id="site"></select>
-      </div>
-      <div class="mf"><label>Technicien *</label>
-        <input id="tech" type="text" placeholder="Prénom Nom">
-      </div>
-      <div class="mf"><label>Micro-parcelle *</label>
-        <select id="code_var"></select>
-      </div>
+      <div class="mf full"><label>Site d'essai *</label><select id="site"></select></div>
+      <div class="mf"><label>Technicien *</label><input id="tech" type="text" placeholder="Prénom Nom"></div>
+      <div class="mf"><label>Micro-parcelle *</label><select id="code_var"></select></div>
     </div>
   </div>
 
@@ -105,59 +90,65 @@ body{font-family:Arial,sans-serif;background:#f4f4f4;min-height:100vh}
     <div class="sh"><span>0 = non observé</span><span>9 = max</span></div>
   </div>
 
+  <div class="sec" id="sec-composantes" style="display:none">
+    <div class="stit">Composantes de rendement</div>
+    <div class="cr"><span style="flex:1;font-size:13px;color:#333">Nombre de rangées</span>
+      <select class="cs" id="mrg"><option value="">—</option><option>12</option><option>14</option><option>16</option><option>18</option><option>20</option></select>
+    </div>
+    <div class="cr"><span style="flex:1;font-size:13px;color:#333">Grains par rang</span>
+      <select class="cs" id="mgr"><option value="">—</option><option>28</option><option>30</option><option>32</option><option>34</option><option>36</option><option>38</option><option>40 et +</option></select>
+    </div>
+  </div>
+
   <div class="sec">
     <div class="stit">Observations</div>
-    <textarea id="comm" style="width:100%;height:60px;padding:8px;border-radius:8px;border:1px solid #ccc;font-family:Arial" placeholder="Commentaires éventuels..."></textarea>
+    <textarea id="comm" style="width:100%;height:60px;padding:8px;border-radius:8px;border:1px solid #ccc;font-family:Arial" placeholder="Commentaires..."></textarea>
   </div>
 
   <button class="btn" id="submit-btn" onclick="sendData()">Enregistrer la notation</button>
+  <div class="footer-note">sans observations enregistrées les notes sont par défaut à 0</div>
 </div>
 
 <div class="tst" id="tst"></div>
 
 <script>
-// --- CONFIGURATION ---
-const WEBHOOK = "https://script.google.com/macros/s/AKfycbwRL6giYOxUz4MoZlAYMoFhpdslWLqxvKXpoUWlgjFoCvEvSSY7cdEebqBIWZx24SaI/exec";
-const APP_PASS = "Saatbau82!"; // <--- MODIFIEZ VOTRE MOT DE PASSE ICI
+const WEBHOOK = "https://script.google.com/macros/s/AKfycbwdEe8oT953gtqQbWcNvhFloMYAgATTl0_clrluetT7_onQoYUfzTnkgENtqZPI6sdF/exec";
+const APP_PASS = "Saatbau82"; 
 
 let currentCulture = 'Maïs';
 const SITES = {
   'Maïs': ["G0 Janze", "G0 Wargnies", "G2 G3 Brux", "G4 G5 Brux", "G4 G5 St Paul", "G4 G5 Fessenheim", "S0 Bourbriac", "S0 Montours", "S1 Waremme", "S1 Wargnies", "S1 Saint Thuriau", "S2 Waremme", "S2 Arras", "S2 Larchamps", "S2 Fessenheim", "S2 Brux", "S3 Brux", "S3 Fessenheim"],
   'Soja': ["Fessenheim", "Garlin", "Dijon", "Thorey en plaine"]
 };
+
 const CRIT = {
-  'Maïs': [ {id:'vig', l:'Vigueur de départ'}, {id:'hp', l:'Hauteur de plante'}, {id:'he', l:'Hauteur insertion épi'}, {id:'sg', l:'Stay green'}, {id:'vs', l:'Tolérance verse'} ],
-  'Soja': [ {id:'vig', l:'Vigueur de départ'}, {id:'ram', l:'Ramification'}, {id:'ins', l:'Insertion 1ère gousse'}, {id:'nbg', l:'Nb gousses / étage'}, {id:'ten', l:'Tenue de plante'}, {id:'pre', l:'Précocité maturité'} ]
+  'Maïs': [ 
+    {id:'vig', l:'Vigueur de départ'}, {id:'hp', l:'Hauteur de plante'}, {id:'he', l:'Hauteur insertion épi'}, {id:'sg', l:'Stay green'}, {id:'vs', l:'Tolérance verse'},
+    {id:'h_hel', l:'Sensibilité Helmintho'}, {id:'h_fust', l:'Sensibilité Fusa tige'}, {id:'h_fuse', l:'Sensibilité Fusa épi'}, {id:'h_char', l:'Sensibilité charbon épi/tige'}
+  ],
+  'Soja': [ 
+    {id:'vig', l:'Vigueur de départ'}, {id:'ram', l:'Ramification'}, {id:'ins', l:'Insertion 1ère gousse'}, {id:'nbg', l:'Nb gousses / étage'}, {id:'ten', l:'Tenue de plante'}, {id:'pre', l:'Précocité maturité'}
+  ]
 };
 
 let notesData = {};
 
-// --- GESTION MOT DE PASSE ---
 function checkPass() {
-  const val = document.getElementById('pass-input').value;
-  if(val === APP_PASS) {
+  if(document.getElementById('pass-input').value === APP_PASS) {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('main-app').style.display = 'block';
-  } else {
-    alert("Code incorrect");
-  }
+  } else { alert("Code incorrect"); }
 }
 
 function updateUI() {
   const sSel = document.getElementById('site');
   sSel.innerHTML = '<option value="">— Sélectionner le site —</option>';
-  SITES[currentCulture].forEach(s => {
-    let o = document.createElement('option'); o.value = s; o.textContent = s;
-    sSel.appendChild(o);
-  });
+  SITES[currentCulture].forEach(s => { let o = document.createElement('option'); o.value = s; o.textContent = s; sSel.appendChild(o); });
 
   const cSel = document.getElementById('code_var');
   cSel.innerHTML = '<option value="">— N° —</option>';
   const max = currentCulture === 'Maïs' ? 60 : 40;
-  for(let i=1; i<=max; i++) {
-    let o = document.createElement('option'); o.value = i; o.textContent = 'Parcelle ' + i;
-    cSel.appendChild(o);
-  }
+  for(let i=1; i<=max; i++) { let o = document.createElement('option'); o.value = i; o.textContent = 'Parcelle ' + i; cSel.appendChild(o); }
 
   const container = document.getElementById('notes_container');
   container.innerHTML = '';
@@ -173,6 +164,9 @@ function updateUI() {
       </div>`;
     container.appendChild(d);
   });
+  
+  // Afficher composantes seulement pour Maïs
+  document.getElementById('sec-composantes').style.display = currentCulture === 'Maïs' ? 'block' : 'none';
 }
 
 function updateNote(id, d) {
@@ -203,6 +197,8 @@ async function sendData() {
     date: new Date().toLocaleDateString('fr-FR'),
     culture: currentCulture, site: site, technicien: tech,
     variete: 'Parcelle ' + code, commentaires: document.getElementById('comm').value,
+    rangees: currentCulture === 'Maïs' ? document.getElementById('mrg').value : '',
+    grains: currentCulture === 'Maïs' ? document.getElementById('mgr').value : '',
     ...notesData
   };
 
@@ -211,6 +207,7 @@ async function sendData() {
     toast('✓ Enregistré !', 'ok');
     document.getElementById('code_var').value = ''; 
     document.getElementById('comm').value = '';
+    if(currentCulture === 'Maïs') { document.getElementById('mrg').value=''; document.getElementById('mgr').value=''; }
   } catch(e) { toast('Erreur réseau', 'err'); } 
   finally { btn.disabled = false; btn.textContent = 'Enregistrer la notation'; }
 }
